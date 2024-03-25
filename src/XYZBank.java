@@ -10,18 +10,25 @@ import Loans.*;
 
 public class XYZBank {
     private static ArrayList<Customer> customers = new ArrayList<>();
+    private int maxCustomers = 0;
+    private int customerCount = 0;
+
+    // record count checker method - return bool
+    private boolean checkRecordCount() {
+        return this.customerCount < this.maxCustomers;
+    }
 
     public static void main(String[] args) {
         Greeting.welcome();
         Time.type("pause");
 
         boolean programRunning = true;
+        
 
+        while(programRunning and checkRecordCount()) {
 
-        while(programRunning) {
             Menu.printMenu();
             String option;
-
             while (true) {
                 System.out.print("Choose an option: ");
                 Scanner scanner = new Scanner(System.in);
