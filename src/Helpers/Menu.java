@@ -18,9 +18,9 @@ public class Menu {
     }
 
     private static void menuLoader() {
-        System.out.println(" ");
+        System.out.println(" "); // Add some space for readability
         System.out.println("Loading up the menu...");
-        System.out.println(" ");
+        System.out.println(" "); // Add some space for readability
         Time.type("sleep");
     }
 

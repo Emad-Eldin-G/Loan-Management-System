@@ -13,17 +13,19 @@ public class XYZBank {
     private static int maxRecords = 0;
     private static int recordsCount = 0;
 
+
     // record count checker method - return bool
     private static boolean checkRecordCount() {
         return recordsCount < maxRecords;
     }
 
+
     public static void main(String[] args) {
-        Greeting.welcome();
+        Greeting.welcome(); // Prints bank name in ASCII art
         Time.type("pause");
         Time.type("sleep");
 
-        boolean programRunning = true;
+        boolean programRunning = true; // program running is initially set to true, as it has just started
 
         // Ask user for max records
         Scanner scanner = new Scanner(System.in);
@@ -40,9 +42,12 @@ public class XYZBank {
         Time.type("pause");
 
 
-        while(programRunning && checkRecordCount()) { // check if the record count is less than the max records
+        // program continues to run until user chooses to exit (option 8)
+        while(programRunning) {
 
-            Menu.printMenu();
+            Menu.printMenu(); // menu printing is called from the Menu class
+            // the menu is printed every time the program loops after user has chosen an option
+
             String option;
             while (true) {
                 System.out.print("Choose an option: ");
@@ -79,6 +84,7 @@ public class XYZBank {
                     customers.add(customer);
                     break;
 
+
                 case "2":
                     System.out.println("- Modify customer -");
                     Time.type("sleep");
@@ -114,8 +120,8 @@ public class XYZBank {
                             System.out.println("Please check that ID is correct, otherwise customer was not added.");
                         }
                     }
-
                     break;
+
 
                 case "3":
                     System.out.println("- Delete customer -");
@@ -158,6 +164,7 @@ public class XYZBank {
                     }
 
                     // check if there are records to add loan to
+                    // if not, the user is notified and the program breaks out of the case
                     if (!checkRecordCount()) {
                         System.out.println("Sorry...");
                         System.out.println("You have reached the maximum number of records to add...");
@@ -185,8 +192,9 @@ public class XYZBank {
                         }
                     }
 
-                    // Query customers to see if customer exists
+                    // Query customers to find customer
                     for (Customer c : customers) {
+                        // if customer is found, add loan to customer
                         if (c.getId().equals(customerID)) {
 
                             // check customer's loan eligibility
@@ -215,7 +223,7 @@ public class XYZBank {
                             System.out.println("5. Other");
                             System.out.println(" "); // add space for readability
 
-                            String loanType = null;
+                            String loanType = null; // initialize loan type variable
                             while (true) {
                                 try {
                                     System.out.print("Please choose a loan type: ");
@@ -232,7 +240,9 @@ public class XYZBank {
                                 }
                             }
 
+
                             System.out.println(" "); // add space for readability
+
 
                             // Then create a loan based on the type
                             switch (loanType) {
@@ -254,6 +264,7 @@ public class XYZBank {
                                     recordsCount++;
                                     break;
 
+
                                 case "2":
                                     // create builder loan
                                     Builder builder = new Builder();
@@ -271,6 +282,7 @@ public class XYZBank {
                                     // increment records count
                                     recordsCount++;
                                     break;
+
 
                                 case "3":
                                     // create personal loan
@@ -290,6 +302,7 @@ public class XYZBank {
                                     recordsCount++;
                                     break;
 
+
                                 case "4":
                                     // create auto loan
                                     Auto auto = new Auto();
@@ -307,6 +320,7 @@ public class XYZBank {
                                     // increment records count
                                     recordsCount++;
                                     break;
+
 
                                 case "5":
                                     // create other loan
@@ -332,7 +346,7 @@ public class XYZBank {
                             }
                 break;
 
-                        } else {
+                        } else { // if customer is not found, notify user, and break out of the loop
                             System.out.println("Customer not found!");
                             Time.type("sleep");
                             System.out.println("Please check that ID is correct, otherwise customer was not added.");
@@ -394,7 +408,7 @@ public class XYZBank {
                                     Time.type("sleep");
                                     System.out.println("Deleting Now...");
 
-                                    // delete loan (remove from list of loans belonging to customer)
+                                    // delete loan (by removing from list of loans belonging to customer)
                                     c.deleteCreditRecord(l);
 
                                     Time.type("pause");
@@ -480,10 +494,12 @@ public class XYZBank {
                     }
                     break;
 
+
                 case "7":
                     System.out.println("- Printing data -");
                     Time.type("pause");
 
+                    // first printing info about the records count and max records
                     System.out.println("Maximum number of Records: " + maxRecords);
                     System.out.println("Current number of Records: " + recordsCount);
                     Time.type("sleep");
@@ -507,11 +523,12 @@ public class XYZBank {
 
                     break;
 
+
                 case "8":
                     System.out.println("Exiting XYZ Bank...");
                     Time.type("sleep");
                     System.out.println("Goodbye!");
-                    programRunning = false;
+                    programRunning = false; // set programRunning to false and exit the while loop and main program
                     break;
 
                 default:
