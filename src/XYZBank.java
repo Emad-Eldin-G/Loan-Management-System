@@ -23,7 +23,7 @@ public class XYZBank {
         Time.type("pause");
 
         boolean programRunning = true;
-        
+
 
         while(programRunning and checkRecordCount()) {
 
@@ -213,30 +213,65 @@ public class XYZBank {
                                     // create mortgage
                                     Mortgage mortgage = new Mortgage();
                                     mortgage.createMortgage();
+                                    // check that loan amount is less than 4 times the annual income
+                                    if (mortgage.getAmountLeftToPay() > 4 * c.getAnnualIncome()) {
+                                        System.out.println("Loan amount exceeds 4 times the annual income...");
+                                        Time.type("sleep");
+                                        System.out.println("Please try again with a lower loan amount...");
+                                        break;
+                                    }
                                     c.addCreditRecord(mortgage);
                                     break;
                                 case "2":
                                     // create builder
                                     Builder builder = new Builder();
                                     builder.createBuilder();
+                                    // check that loan amount is less than 4 times the annual income
+                                    if (builder.getAmountLeftToPay() > 4 * c.getAnnualIncome()) {
+                                        System.out.println("Loan amount exceeds 4 times the annual income...");
+                                        Time.type("sleep");
+                                        System.out.println("Please try again with a lower loan amount...");
+                                        break;
+                                    }
                                     c.addCreditRecord(builder);
                                     break;
                                 case "3":
                                     // create personal
                                     Personal personal = new Personal();
                                     personal.createPersonal();
+                                    // check that loan amount is less than 4 times the annual income
+                                    if (personal.getAmountLeftToPay() > 4 * c.getAnnualIncome()) {
+                                        System.out.println("Loan amount exceeds 4 times the annual income...");
+                                        Time.type("sleep");
+                                        System.out.println("Please try again with a lower loan amount...");
+                                        break;
+                                    }
                                     c.addCreditRecord(personal);
                                     break;
                                 case "4":
                                     // create auto
                                     Auto auto = new Auto();
                                     auto.createAuto();
+                                    // check that loan amount is less than 4 times the annual income
+                                    if (auto.getAmountLeftToPay() > 4 * c.getAnnualIncome()) {
+                                        System.out.println("Loan amount exceeds 4 times the annual income...");
+                                        Time.type("sleep");
+                                        System.out.println("Please try again with a lower loan amount...");
+                                        break;
+                                    }
                                     c.addCreditRecord(auto);
                                     break;
                                 case "5":
                                     // create other
                                     Other other = new Other();
                                     other.createOther();
+                                    // check that loan amount is less than 4 times the annual income
+                                    if (other.getAmountLeftToPay() > 4 * c.getAnnualIncome()) {
+                                        System.out.println("Loan amount exceeds 4 times the annual income...");
+                                        Time.type("sleep");
+                                        System.out.println("Please try again with a lower loan amount...");
+                                        break;
+                                    }
                                     c.addCreditRecord(other);
                                     break;
                                 default:

@@ -117,11 +117,16 @@ public class Customer implements CheckPrinter {
 
         Time.type("sleep");
 
-        System.out.println("Eligibilty: ");
-        boolean eligibility = scanner.nextBoolean();
+        // it makes more sense to ask user if eligibility is yes or no, rather than asking for boolean input
+        System.out.println("Eligibilty (yes or no): ");
+        String eligibility = scanner.next();
+        eligibility = eligibility.toLowerCase(); // convert to lowercase to make it case insensitive
+
+        boolean newEligibility;
+        newEligibility = eligibility.equals("yes");
 
         this.annualIncome = newAnnualIncome;
-        this.eligibility = eligibility;
+        this.eligibility = newEligibility;
     }
 
     public void addCreditRecord(Loan record) {
@@ -136,7 +141,7 @@ public class Customer implements CheckPrinter {
         return this.customerId;
     }
 
-    private double amountLeftToPay() {
+    private double amountLeftToPay() { // determined by the sum of all loans
         double amountLeftToPay = 0;
         for (Loan creditRecord : creditRecords) {
             amountLeftToPay += creditRecord.getAmountLeftToPay();
@@ -147,6 +152,7 @@ public class Customer implements CheckPrinter {
     private void printFormattedLoans() {
         // Printing headers with column length of 20 characters
         System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s\n", " ", "Record ID", "Loan Type", "Interest Rate", "Amount Left To Pay", "Term Left");
+
         // Printing Loans in a row tabular way
         for (Loan creditRecord : creditRecords) {
             System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s\n", " ", creditRecord.getRecordId(), creditRecord.getLoanType(), creditRecord.getInterestRate(), creditRecord.getAmountLeftToPay(), creditRecord.getTermLeft());
@@ -155,6 +161,21 @@ public class Customer implements CheckPrinter {
 
     @Override
     public boolean checkEligibility() {
+        // if user has 0 income, then he can't possibly pay back any loans
+        if (this.annualIncome == 0) {
+            this.eligibility = false;
+            return false;
+        }
+
+        // if user has no loans, then he is eligible initially,
+        // the program for the first loan record keeps track of the loan amount
+        // then percepts it later
+        if (creditRecords.isEmpty()) {
+            this.eligibility = true;
+            return true;
+        }
+
+        // eligibility is determined by the amount left to pay compared to the annual income * 4
         double annualIncomeFourX = this.annualIncome * 4;
         if (amountLeftToPay() > annualIncomeFourX) {
             this.eligibility = false;
@@ -169,13 +190,19 @@ public class Customer implements CheckPrinter {
     public void printCustomer() {
         System.out.println("CustomerID " + this.customerId);
         System.out.println(" ");
+
+        // prints user eligibility description based on the checkEligibility method
+        checkEligibility(); // calls the checkEligibility method to update the eligibility status
+
         if (this.eligibility) {
             System.out.println("Eligible to arrange new loans - YES");
         } else {
             System.out.println("Eligible to arrange new loans - NO");
         }
+
         System.out.println(" ");
 
+        // this method prints all customer loans in a formatted tabular way
         printFormattedLoans();
     }
 }
