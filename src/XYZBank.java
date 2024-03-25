@@ -10,12 +10,12 @@ import Loans.*;
 
 public class XYZBank {
     private static ArrayList<Customer> customers = new ArrayList<>();
-    private int maxCustomers = 0;
-    private int customerCount = 0;
+    private static int maxRecords = 0;
+    private static int recordsCount = 0;
 
     // record count checker method - return bool
-    private boolean checkRecordCount() {
-        return this.customerCount < this.maxCustomers;
+    private static boolean checkRecordCount() {
+        return recordsCount < maxRecords;
     }
 
     public static void main(String[] args) {
@@ -24,14 +24,26 @@ public class XYZBank {
 
         boolean programRunning = true;
 
+        // Ask user for max records
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            try {
+                System.out.print("Please input the maximum number of records to store: ");
+                maxRecords = scanner.nextInt();
+                break;
+            } catch (Exception e) {
+                System.out.println("Please input a valid positive number...");
+                continue;
+            }
+        }
 
-        while(programRunning and checkRecordCount()) {
+
+        while(programRunning && checkRecordCount()) { // check if the record count is less than the max records
 
             Menu.printMenu();
             String option;
             while (true) {
                 System.out.print("Choose an option: ");
-                Scanner scanner = new Scanner(System.in);
                 option = scanner.next();
 
                 try {
@@ -77,7 +89,6 @@ public class XYZBank {
 
                     // Ask for customer id to modify
                     System.out.print("Enter ID of customer to modify: ");
-                    Scanner scanner = new Scanner(System.in);
                     String customerId = scanner.next();
 
                     // Query customers to see if customer exists
@@ -137,8 +148,17 @@ public class XYZBank {
                     System.out.println("- Add Loan to customer -");
                     Time.type("pause");
 
+                    // check if there are customers to add loan to
                     if (customers.isEmpty()) {
                         System.out.println("No customers to add loan to...");
+                        Time.type("sleep");
+                        break;
+                    }
+
+                    // check if there are records to add loan to
+                    if (!checkRecordCount()) {
+                        System.out.println("Sorry...");
+                        System.out.println("You have reached the maximum number of records to add...");
                         Time.type("sleep");
                         break;
                     }
@@ -171,11 +191,13 @@ public class XYZBank {
                             boolean elig = c.checkEligibility();
                             if (!elig) {
                                 System.out.println("Customer found, but is not eligible for a loan...");
+                                System.out.println(" "); // add space for readability
                                 Time.type("sleep");
                                 break;
                             }
 
                             System.out.println("Customer found!");
+                            System.out.println(" "); // add space for readability
                             Time.type("sleep");
                             System.out.println("Please follow the prompts to add loan to customer...");
                             Time.type("sleep");
@@ -189,6 +211,7 @@ public class XYZBank {
                             System.out.println("3. Personal");
                             System.out.println("4. Auto");
                             System.out.println("5. Other");
+                            System.out.println(" "); // add space for readability
 
                             String loanType = null;
                             while (true) {
@@ -210,7 +233,7 @@ public class XYZBank {
                             // Then create a loan based on the type
                             switch (loanType) {
                                 case "1":
-                                    // create mortgage
+                                    // create mortgage loan
                                     Mortgage mortgage = new Mortgage();
                                     mortgage.createMortgage();
                                     // check that loan amount is less than 4 times the annual income
@@ -221,9 +244,14 @@ public class XYZBank {
                                         break;
                                     }
                                     c.addCreditRecord(mortgage);
+                                    System.out.println("Loan added to customer!");
+                                    Time.type("pause");
+                                    // increment records count
+                                    recordsCount++;
                                     break;
+
                                 case "2":
-                                    // create builder
+                                    // create builder loan
                                     Builder builder = new Builder();
                                     builder.createBuilder();
                                     // check that loan amount is less than 4 times the annual income
@@ -234,9 +262,14 @@ public class XYZBank {
                                         break;
                                     }
                                     c.addCreditRecord(builder);
+                                    System.out.println("Loan added to customer!");
+                                    Time.type("pause");
+                                    // increment records count
+                                    recordsCount++;
                                     break;
+
                                 case "3":
-                                    // create personal
+                                    // create personal loan
                                     Personal personal = new Personal();
                                     personal.createPersonal();
                                     // check that loan amount is less than 4 times the annual income
@@ -247,9 +280,14 @@ public class XYZBank {
                                         break;
                                     }
                                     c.addCreditRecord(personal);
+                                    System.out.println("Loan added to customer!");
+                                    Time.type("pause");
+                                    // increment records count
+                                    recordsCount++;
                                     break;
+
                                 case "4":
-                                    // create auto
+                                    // create auto loan
                                     Auto auto = new Auto();
                                     auto.createAuto();
                                     // check that loan amount is less than 4 times the annual income
@@ -260,9 +298,14 @@ public class XYZBank {
                                         break;
                                     }
                                     c.addCreditRecord(auto);
+                                    System.out.println("Loan added to customer!");
+                                    Time.type("pause");
+                                    // increment records count
+                                    recordsCount++;
                                     break;
+
                                 case "5":
-                                    // create other
+                                    // create other loan
                                     Other other = new Other();
                                     other.createOther();
                                     // check that loan amount is less than 4 times the annual income
@@ -273,25 +316,39 @@ public class XYZBank {
                                         break;
                                     }
                                     c.addCreditRecord(other);
+                                    System.out.println("Loan added to customer!");
+                                    Time.type("pause");
+                                    // increment records count
+                                    recordsCount++;
                                     break;
+
                                 default:
                                     System.out.println("Invalid option - Please try again and follow the prompts...");
                                     break;
                             }
+                break;
 
-                            // add loan to customer
-                            Time.type("pause");
-                            System.out.println("Loan added to customer!");
-                            break;
                         } else {
                             System.out.println("Customer not found!");
                             Time.type("sleep");
                             System.out.println("Please check that ID is correct, otherwise customer was not added.");
+                            break;
                         }
                     }
 
 
                 case "5":
+                    // double checking that user chose 5 before continuing
+                    if (!option.equals("5")) {
+                        break;
+                    }
+
+                    if (customers.isEmpty()) {
+                        System.out.println("No customers to delete loan from...");
+                        Time.type("sleep");
+                        break;
+                    }
+
                     System.out.println("Delete Loan from customer");
                     // Ask for customer id to delete loan from
                     scanner = new Scanner(System.in);
@@ -355,11 +412,23 @@ public class XYZBank {
                             System.out.println("Customer not found!");
                             Time.type("sleep");
                             System.out.println("Please check that ID is correct, otherwise customer was not added.");
+                            break;
                         }
                     }
-                    break;
+
 
                 case "6":
+                    // double checking that user chose 6 before continuing
+                    if (!option.equals("6")) {
+                        break;
+                    }
+
+                    if (customers.isEmpty()) {
+                        System.out.println("No customers to check eligibility...");
+                        Time.type("sleep");
+                        break;
+                    }
+
                     System.out.println("- Check customer's loan eligibility -");
                     Time.type("pause");
 
@@ -411,6 +480,11 @@ public class XYZBank {
                     System.out.println("- Printing data -");
                     Time.type("pause");
 
+                    System.out.println("Maximum number of Records: " + maxRecords);
+                    System.out.println("Current number of Records: " + recordsCount);
+                    Time.type("sleep");
+                    System.out.println("======================================================="); // add space for readability
+
                     if (customers.isEmpty()) {
                         System.out.println("No customers or data to print...");
                         System.out.println("Please add customers and data to print...");
@@ -422,6 +496,11 @@ public class XYZBank {
                     for (Customer c : customers) {
                         c.printCustomer();
                     }
+                    // sleep for 3 seconds
+                    Time.type("sleep");
+                    Time.type("sleep");
+                    Time.type("sleep");
+
                     break;
 
                 case "8":

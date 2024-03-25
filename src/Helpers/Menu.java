@@ -18,6 +18,7 @@ public class Menu {
     }
 
     private static void menuLoader() {
+        System.out.println(" ");
         System.out.println("Loading up the menu...");
         System.out.println(" ");
         Time.type("sleep");

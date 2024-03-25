@@ -151,7 +151,7 @@ public class Customer implements CheckPrinter {
 
     private void printFormattedLoans() {
         // Printing headers with column length of 20 characters
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s\n", " ", "Record ID", "Loan Type", "Interest Rate", "Amount Left To Pay", "Term Left");
+        System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s\n", " ", "RecordID", "LoanType", "IntRate", "AmountLeft", "TimeLeft");
 
         // Printing Loans in a row tabular way
         for (Loan creditRecord : creditRecords) {
@@ -204,5 +204,7 @@ public class Customer implements CheckPrinter {
 
         // this method prints all customer loans in a formatted tabular way
         printFormattedLoans();
+        // Add partition between customers
+        System.out.println("=======================================================");
     }
 }
