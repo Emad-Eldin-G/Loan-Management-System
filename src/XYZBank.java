@@ -21,6 +21,7 @@ public class XYZBank {
     public static void main(String[] args) {
         Greeting.welcome();
         Time.type("pause");
+        Time.type("sleep");
 
         boolean programRunning = true;
 
@@ -36,6 +37,7 @@ public class XYZBank {
                 continue;
             }
         }
+        Time.type("pause");
 
 
         while(programRunning && checkRecordCount()) { // check if the record count is less than the max records
@@ -229,6 +231,8 @@ public class XYZBank {
                                     continue;
                                 }
                             }
+
+                            System.out.println(" "); // add space for readability
 
                             // Then create a loan based on the type
                             switch (loanType) {

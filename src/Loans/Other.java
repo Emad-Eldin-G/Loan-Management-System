@@ -6,7 +6,6 @@ public class Other extends Loan{
 
     public void createOther(){
         System.out.println("Other Loan Creator Tool Spinning Up...");
-        Time.type("pause");
 
         // Broken down each input into separate methods for readability and better design
         // Each method returns the value to be set in the constructor
