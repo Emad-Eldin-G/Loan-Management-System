@@ -1,4 +1,4 @@
-# Load-Management-System  
+# Loan-Management-System  
 
                                                                         
     ,--.   ,--.,--.   ,--.,-------.,-----.    ,---.  ,--.  ,--.,--. ,--.     
